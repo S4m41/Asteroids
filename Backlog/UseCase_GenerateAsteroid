@@ -1,5 +1,5 @@
 Use Case
-	CreateAsteroid
+	GenerateAsteroid
 Actors
 System,Asteroid
 Description

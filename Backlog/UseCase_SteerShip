@@ -1,0 +1,15 @@
+Use Case
+	Steer ship
+Actors
+	User, system, ship
+Description
+	The user holds down a key representing movement. 
+	The system reads the key. The system steers the ship
+Main Course of Events
+Actor			System								Ship
+1.Presses key
+				2.Read key
+ 				3.Check if key represents steering
+ 													4.Change ship heading
+Alternative Flow of Events
+2.1 Wrong key. No change in system

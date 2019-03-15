@@ -1,14 +1,50 @@
 game
 	canvas
-	map -draw  -§update?
-		entity handler -§update?
-			entity
-				player
-				astroid
-				bullet
+	world -draw  -§update?
+	entityHandler -§update?
+		entity
+			ship
+			astroid
+			bullet
 				
 §update
 	-move//wrap
 	-collisions
 	-addnew//at frequency
 	-check dead.
+	
+	
+	
+	
+	
+	
+	for(entity: ship)
+		ship.move();
+		for(entity::asteroids:a)
+			if((ship.doescollide(a))
+				ship.collidedWith(type:asteroid)
+		ship.isdead();
+		
+		§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+	
+	this.createEntity(this,...)
+		
+	system.update(){
+		for(entity: e){
+			e.move();
+			e.isdead();
+		}
+	}
+	
+	entity.move(){
+		this.calcnewpos();
+		entity = world.doescollide(this.pos);//needs size
+		if(!entity equals null)
+			if(this.type==ship && entity.type==astroid)
+				this.colidedWith(astroid);
+		else
+			map.updateposition(this)//uses size id,size and pos
+	}
+	collidedWith(){
+		if(this.type==ship && entity.type==astroid)
+			this.ded();
