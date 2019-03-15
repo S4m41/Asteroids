@@ -9,6 +9,9 @@ FireBullet 4
 AsteroidCollShip 5
 BulletCollAsteroid 5
 AsteroidSplit 6
-GameOver 7*
+Optimizing 7*_
+GameOver 8*
+Multithreading 9*_
 HighScore 10*
 StartScren 10*
+

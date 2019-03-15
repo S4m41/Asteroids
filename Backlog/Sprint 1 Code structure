@@ -1,0 +1,14 @@
+game
+	canvas
+	map -draw  -§update?
+		entity handler -§update?
+			entity
+				player
+				astroid
+				bullet
+				
+§update
+	-move//wrap
+	-collisions
+	-addnew//at frequency
+	-check dead.
