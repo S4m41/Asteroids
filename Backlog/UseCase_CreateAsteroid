@@ -1,0 +1,14 @@
+Use Case
+	CreateAsteroid
+Actors
+System,Asteroid
+Description
+	The system creates asteroids in a set frequency. The asteroid is created with heading, speed, size and position
+Main Course of Events
+Asteroid	System
+			1.The system checks if enough time has passed since last asteroid creation
+2.The system creates an asteroid
+3.the system sets heading, speed, size and position
+
+Alternative Flow of Events
+1.1 Not enough time has passed. Do nothing.

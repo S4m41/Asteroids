@@ -1,0 +1,15 @@
+Use Case
+ Move Asteroid
+Actors
+	Asteroid,System
+Description
+	Asteroids move about on the Map.
+Main Course of Events
+Asteroid	System			
+			1.The system asks for speed,heading,position,size of the asteroid.
+2.provides
+			3.Check if Asteroid collides with bullet
+4.Change Asteroid position according to heading and speed
+
+Alternative Flow of Events
+3.1 Asteroid collides with bullet. Split asteroid.

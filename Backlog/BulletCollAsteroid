@@ -1,0 +1,20 @@
+Use Case
+	BulletCollAsteroid
+Actors
+	Asteroid, Bullet, system
+Description
+	The system has tried to move Asteroid and is now seeing if Asteroid has collided with Bullet.
+Main Course of Events
+Actor		System			Bullet
+			1.The system asks for speed,heading,position,size of the asteroid.
+2.provides
+			3.The system asks for position from all bullets
+							4.Provides
+			5.The system determines the closest 5(make var) bullets 
+			6.The system asks them for size
+							7.provides
+			8.calculate distance between chosen Bullets and asteroid.
+			9.See if any distance is greater than the Asteroid size plus current Bullet size
+			10.Continue moving asteroid.
+Alternative Flow of Events
+9.1 The distance is not greater than. Split asteroid.

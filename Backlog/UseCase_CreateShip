@@ -1,0 +1,14 @@
+Use Case
+	CreateShip
+Actors
+	Ship,System
+Description
+	The user has indicated the start of a new game. 
+	The system tries to create a ship avatar for the user
+Main Course of Events
+Ship			System
+1.System sets heading, speed, position of Ship. 
+
+
+Alternative Flow of Events
+-

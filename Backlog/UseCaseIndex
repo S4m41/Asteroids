@@ -1,0 +1,14 @@
+Scale 1>10
+
+CreateShip 2 
+MoveShip 2
+MoveAsteroid 2
+MoveBullet 3
+CreateAsteroid 4
+FireBullet 4
+AsteroidCollShip 5
+BulletCollAsteroid 5
+AsteroidSplit 6
+GameOver 7*
+HighScore 10*
+StartScren 10*

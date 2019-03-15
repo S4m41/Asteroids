@@ -1,0 +1,17 @@
+Use Case
+	AsteroidSplit
+Actors
+	Asteroid,system
+Description
+	the system asks the asteroid to split.
+Main Course of Events
+Actor	System
+		1.The system has determined that the asteroid shall split
+ 		2.The system Asks for the asteroids heading,size and speed.
+3.Provides
+		4.The system checks if the size is the not smallest one
+		5.The system creates 2 new smaller asteroids with half of the speed of the original
+			and heading mirrored an angle along the old asteroids heading 
+
+Alternative Flow of Events
+4.1 the asteroid is of the smallest type. The asteroid dies.

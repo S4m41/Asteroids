@@ -1,0 +1,18 @@
+Use Case
+	Asteroid Collission w ship
+Actors
+	Ship, System,Asteroid
+Description
+	The system has tried to move Ship and is now seeing if ship has collided with asteroid.
+	
+Main Course of Events
+Ship		System		Asteroid
+			1.Ask for ship position and size
+2.Provide them
+			3.Ask each asteroid for position and size
+						4.Provide them
+			4.Calculate distance between the ship and each asteroid.
+			5.See if any distance is greater than the ship size plus current asteroid size
+			6.Continue moving ship
+Alternative Flow of Events
+5. The distance is not greater than. Declare game over.

@@ -1,0 +1,21 @@
+Use Case
+	Fire Bullet
+Actors
+	User, System, Ship, Bullet
+Description
+	The user holds down a key representing firing a bullet. The system reads the key. The system checks the ships position and heading. 
+	The system creates a bullet with the same heading as ship.
+Main Course of Events
+User			System								Ship					Bullet
+1.Presses key
+				2.Read key
+ 				3.Check if key represents firing
+ 				4.Check Ship Heading
+ 													5.Tell System Heading
+ 																			6.Create a Bullet with same 
+ 																				heading as ship
+ 																			7. Set bullet speed,ttl
+
+Alternative Flow of Events
+2.1 Wrong key. No change in system
+4.1 The ship doesn't exsist
