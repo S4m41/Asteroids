@@ -1,0 +1,14 @@
+Entity
+
+Heading
+speed
+position
+
+Size?
+
+type //enum? int?
+
+active
+
+sprite?
+
