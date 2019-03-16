@@ -1,7 +1,5 @@
 Properties
-
-Heading
-speed
-position
+is entity
 fireCD
-alive flag?
+Method
+fire()

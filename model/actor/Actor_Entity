@@ -1,15 +1,16 @@
-Entity
-
+Properties
 Heading
 speed
 position
 ID//java implicit
-
 Size?
-
 type //enum? int?
-
 active
-
 sprite?
 
+Methods
+
++move()
++isAlive()
++collidedWith(entity)
+-ded()

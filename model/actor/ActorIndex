@@ -1,11 +1,11 @@
-System
-	GUI
-	
-User
-Ship
-Asteroid
-Bullet
-Map
+System 
+	Screen
+User?
+Ship -is an entity
+Asteroid -is an entity
+Bullet -is an entity
+World - is contained in game
+Game -	is part of the system
+	-
 
-
-Entity?
+Entity - is recorded in world

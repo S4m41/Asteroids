@@ -10,9 +10,29 @@
 §Planning Risks and Contingencies
 	Overtime. Do simplified. Risk=nuke project or part of it.
 §Glossary
-domain model
-atribute
+ENTITY COMPONENT SYSTEM
+
 actor
 extends//do not use
 include
 
+Concept
+Class
+Instance
+Object
+Object state
+Class Diagram
+Domain Model (Also: Conceptual Model)
+System Sequence Diagram
+System Event
+Unit Testing
+Regression Testing
+Integration Testing
+Black Box
+Software Architecture
+Layered Software Architecture
+Model-View-Controller Software Architecture
+Pipes-and-Filters Software Architecture
+
+§Links
+https://www.diagrameditor.com/

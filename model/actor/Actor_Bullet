@@ -1,7 +1,5 @@
 Properies
-
-Heading
-speed
-position
-
+is entity
 TTL
+Methods
+-decay(double)

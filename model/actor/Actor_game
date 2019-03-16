@@ -1,0 +1,6 @@
+Properties
+state
+current world
+list of entities. perhaps handler
+Method
+generate asteroid//tell handler to or do self

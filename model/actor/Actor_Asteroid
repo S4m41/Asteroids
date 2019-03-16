@@ -1,7 +1,7 @@
 Properties
+is entity
+static time since last generation
 
-Heading
-speed
-position
-
-Size
+Method
++split():bool
++generate(double time):bool//wrong time

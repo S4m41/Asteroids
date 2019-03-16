@@ -28,7 +28,8 @@ game
 		§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 	
 	this.createEntity(this,...)
-		
+	
+	
 	system.update(){
 		for(entity: e){
 			e.move();
@@ -36,15 +37,17 @@ game
 		}
 	}
 	
+	//entity extended by ship,asteroid
 	entity.move(){
 		this.calcnewpos();
-		entity = world.doescollide(this.pos);//needs size
-		if(!entity equals null)
-			if(this.type==ship && entity.type==astroid)
+		cEntity = world.doescollide(this.pos);//do i collide with anything at this position.needs size
+		if(!cEntity equals null)
+			if(this.type==ship && cEntity.type==astroid)
 				this.colidedWith(astroid);
 		else
-			map.updateposition(this)//uses size id,size and pos
+			world.updateposition(this)//uses size id,size and pos
 	}
-	collidedWith(){
+	entity.collidedWith(){
 		if(this.type==ship && entity.type==astroid)
 			this.ded();
+	}		
