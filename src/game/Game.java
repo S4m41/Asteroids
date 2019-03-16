@@ -70,8 +70,8 @@ public class Game {
 				// TODO remove from list
 			}
 
-			if (e instanceof Entity) {//TODO visitor pattern?
-
+			if (e instanceof Entity) {//TODO visitor pattern? do nt le this start. leaks ahoy
+				entityList.add(new Entity());
 			}
 		}
 
