@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author Nahrwals
- *
- */
-module Asteroids {
-}
