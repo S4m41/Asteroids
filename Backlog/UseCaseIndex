@@ -1,18 +1,17 @@
 Scale 1>10
 
-CreateShip 2?
+
 StartGame 1*
 SteerShip 2
 GenerateAsteroidSimple 2*
-MoveAsteroid 2?
 AsteroidCollShip 2
-MoveBullet 3?
 FireBullet 4
 BulletCollAsteroid 5
 AsteroidSplit 6
-GenerateAsteroid 6
+GenerateAsteroid 6 //extends GenerateAsteroidSimple
 Optimizing 7*_
-GameOver 8*
+GameOver 8* //extends AsteroidCollShip
 Multithreading 9*_
 HighScore 10*
 StartScren 10*
+Pause 10*

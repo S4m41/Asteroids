@@ -1,0 +1,18 @@
+§Test Items
+	Create domain model for the game.
+§Items to be tested
+	Domain model exsists
+§Approach
+	Use Examples of domain modeling to see good uses of praxsis.
+§Item Pass/Fail Criteria
+§Schedule
+	10h
+§Planning Risks and Contingencies
+	Overtime. Do simplified. Risk=nuke project or part of it.
+§Glossary
+domain model
+atribute
+actor
+extends//do not use
+include
+
