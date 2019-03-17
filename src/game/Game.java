@@ -1,16 +1,21 @@
 package game;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 import game.entity.Entity;
 import game.world.World;
 
-public class Game {
-
+public class Game{
+	
 	private World currentWorld;
 	// the list of all entities
 	private ArrayList<Entity> entityList;
+	private JFrame screen;
+	
 	public GameState currentState = GameState.unidentified;
+	
 
 	public Game() {
 
@@ -21,7 +26,7 @@ public class Game {
 
 	// do initial setup,, create own exception
 	public void start() throws IllegalStateException {
-		// do stuffs
+		// do stuffs. init jframe here. perhaps own thread?
 		if (getState() != GameState.starting)
 			throw new IllegalStateException();
 		setState(GameState.running);
@@ -41,9 +46,11 @@ public class Game {
 			long timeTaken = now - last;
 			last = now;
 			double delta = timeTaken / ((double) optimum);//XXX wrong
+			
 			update(delta);
 			draw();
 			render();
+			
 			lastTick += timeTaken;
 			fps++;
 
@@ -78,10 +85,10 @@ public class Game {
 	}
 
 	private void draw() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub draw to graphics object
 
 	}
-
+	public void paint( Graphics g){        g.drawString( "Hej, mr Universum!", 100,100);    }
 	private void render() {
 		// TODO Auto-generated method stub
 
