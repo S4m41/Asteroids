@@ -1,8 +1,14 @@
 §Test Items
 	Jframe implementation
 §Items to be tested
+	cicle and hello world
 §Approach
+	shia le beuf
 §Item Pass/Fail Criteria
+	crashes- fail to display
 §Schedule
+	8h
 §Planning Risks and Contingencies
+	risk:fail to implement - project failiure
+	risk:depricated- ignore deprication and live with warnings and old codebase.
 §Glossary
