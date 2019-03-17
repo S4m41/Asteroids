@@ -1,0 +1,14 @@
+game
+	canvas(jframe)
+	world -draw  -§update?
+	entityHandler -§update?
+		entity
+			ship
+			astroid
+			bullet
+				
+§update
+	-move//wrap
+	-collisions
+	-addnew//at frequency
+	-check dead.
