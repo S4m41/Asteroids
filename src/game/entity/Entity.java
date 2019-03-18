@@ -1,6 +1,7 @@
 package game.entity;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrapper
@@ -89,6 +90,13 @@ public class Entity implements Drawable {
 	public void setPosition(Vector2D position) {
 		this.position = position;
 	}
+
+	public void wrap(Dimension gridPos, Dimension worldSize, Dimension tileSize) {
+		
+		
+	}
+
+
 
 
 }

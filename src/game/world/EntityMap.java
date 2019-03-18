@@ -63,9 +63,13 @@ public class EntityMap extends Vector<Vector<EntityNode>> {
 		
 	}
 	public Dimension getGridPosition(Entity e) {
-		int x = (int) (e.getPosition().getX()/tileSize.width);
-		int y = (int) (e.getPosition().getY()/tileSize.height);
+		int x = ((int) e.getPosition().getX())/tileSize.width;
+		int y = ((int) e.getPosition().getY())/tileSize.height;
 		return new Dimension(x,y);
+	}
+
+	public Dimension getTileSize() {
+		return tileSize;
 	}
 
 }

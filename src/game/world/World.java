@@ -42,7 +42,7 @@ public class World implements Drawable {
 	@Override
 	public void draw(Graphics g) {
 		for(Entity e : entityMap.getContainedEntities()) {
-			
+			e.draw(g);
 		}
 
 	}
@@ -60,10 +60,29 @@ public class World implements Drawable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/***
+	 * Why do i have wrap logic here. ugly as sin
+	 * @param entity
+	 */
+	
 	public void updateposition(Entity entity) {
-		entityMap.remove(entity);
-		entityMap.add(entity);
+		Dimension gridPos = entityMap.getGridPosition(entity);
+		int gridX = gridPos.width;
+		int gridY = gridPos.height;
+		boolean boundsFlag = false;
+		try {
+			entityMap.get(gridX, gridY);
+		}catch(ArrayIndexOutOfBoundsException e) {
+			boundsFlag=true;
+		}
+		if(boundsFlag) {
+			//System.out.println("ya done goofed");
+			entity.wrap(gridPos, worldSize, entityMap.getTileSize());
+			updateposition(entity);
+		}else {
+			entityMap.remove(entity);
+			entityMap.add(entity);
+		}
 	}
 
 }
