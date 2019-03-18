@@ -1,6 +1,8 @@
-package game.entity;
+package game.world;
 
 import java.util.ArrayList;
+
+import game.entity.Entity;
 
 public class EntityNode extends ArrayList<Entity>{//stack?
 

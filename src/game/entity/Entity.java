@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrapper
 
+import game.world.World;
 import main.Drawable;
 
 public class Entity implements Drawable {
@@ -21,13 +22,25 @@ public class Entity implements Drawable {
 	
 	protected Vector2D oldposition = getPosition();
 	
+	World myworld;
+	Entity(World home){
+		myworld = home;
+	}
+	
 	// sprite
 	public void move(double delta) {
+		oldposition = position;
 		position = position.add(heading.scalarMultiply(speed));
+		Entity cEntity = myworld.doescollide(position);//do i collide with anything at this position.needs size
+		if(cEntity != null) {
+				this.colidedWith(cEntity);
+		}else {
+			myworld.updateposition(this);
+		}
 	}
-
-	
-	// +collidedWith(entity)
+	private void colidedWith(Entity cEntity) {//virtual
+		// TODO Auto-generated method stub
+	}
 	// -ded()
 	@Override
 	public void draw(Graphics g) {

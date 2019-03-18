@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import game.entity.Entity;
-import game.entity.EntityNode;
 
 public class EntityMap extends Vector<Vector<EntityNode>> {
 	/**
