@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -9,14 +10,28 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import game.Game;
 import game.entity.Entity;
+import game.entity.EntityNode;
+import game.world.EntityMap;
 
 //main enty point of program
 public class entry {
 	public static void main(String args[]) {
+		gameLaunch();
+	}
+
+	@SuppressWarnings("unused")
+	private static void gameLaunch() {
 		Game g = new Game();
 		g.run();
 	}
-	
+	@SuppressWarnings("unused")
+	private static void entityMapTest() {
+		Dimension worldSize = new Dimension(50,50);
+		EntityMap entityMap = new EntityMap(worldSize);
+		System.out.println(entityMap.get(0).get(0).isEmpty());
+		
+		
+	}
 	@SuppressWarnings("unused")
 	private static void jframetest() {
 		JFrame test = new JFrame();
@@ -46,7 +61,7 @@ public class entry {
 		Entity e = new Entity();
 		testing.add(e);//entity doesnt work. fixed
 		//testing.add(e);
-		e.move();
+		e.move(1);
 		jp.updatedrawlist(testing);
 		jp.repaint();
 		testing.remove(e);
@@ -92,7 +107,7 @@ public class entry {
 			
 			
 			test.repaint();
-			e.move();
+			e.move(1);
 			lastTick += timeTaken;
 			fps++;
 
@@ -164,8 +179,8 @@ public class entry {
 			
 			
 			
-			e.move();
-			e1.move();
+			e.move(1);
+			e1.move(1);
 			frame.repaint();
 			//update fpsticker
 			lastTick += timeTaken;

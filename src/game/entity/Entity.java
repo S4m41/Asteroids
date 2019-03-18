@@ -8,18 +8,21 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrappe
 import main.Drawable;
 
 public class Entity implements Drawable {
+	
 	protected Vector2D position = new Vector2D(1, 1);
 	protected Vector2D heading = new Vector2D(1, 1);
 	protected double speed = 1;
-	private int ID = hashCode(); // java implicit. check later temp
-	private int size = 10;
 	//// type //enum? int?
 	protected boolean alive = true;
-	
 	protected Color mycol = Color.blue;//temp replace w sprite
 
+	private final int ID = hashCode(); // java implicit. check later temp
+	private int size = 10;
+	
+	protected Vector2D oldposition = getPosition();
+	
 	// sprite
-	public void move() {
+	public void move(double delta) {
 		position = position.add(heading.scalarMultiply(speed));
 	}
 
@@ -63,4 +66,16 @@ public class Entity implements Drawable {
 	public int getID() {
 		return ID;
 	}
+
+
+	public Vector2D getPosition() {
+		return position;
+	}
+
+
+	public void setPosition(Vector2D position) {
+		this.position = position;
+	}
+
+
 }

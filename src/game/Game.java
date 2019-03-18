@@ -97,7 +97,8 @@ public class Game{
 	}
 
 	private void update(double delta) {
-		currentWorld.update(delta);
+		if(getState() ==GameState.running)
+			getCurrentWorld().update(delta);
 	}
 	private boolean isRunning() {
 		return getState() == GameState.running;
@@ -111,13 +112,15 @@ public class Game{
 		this.currentState = state;
 
 	}
-	
+	private World getCurrentWorld() {
+		return currentWorld;
+	}
 	private void setCurrentWorld(World braveNewWorld) {
 		//add the new world to be drawn
-		screenPane.addDrawable(braveNewWorld);
-		
-		//flag the old world to be discarded
-		currentWorld.setActive(false);
+		screenPane.addDrawable(braveNewWorld);//FIX wierd dataflow. the wold doesnt give a list of drawables
+		if(currentWorld!= null)
+			//flag the old world to be discarded
+			currentWorld.setActive(false);
 		
 		//replace wolds
 		this.currentWorld = braveNewWorld;
