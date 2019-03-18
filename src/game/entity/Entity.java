@@ -1,4 +1,6 @@
 package game.entity;
+
+import java.awt.Color;
 import java.awt.Graphics;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrapper
@@ -6,24 +8,59 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrappe
 import main.Drawable;
 
 public class Entity implements Drawable {
-	Vector2D heading,position= new Vector2D(0, 0);
-	double speed=1;
-	//ID//java implicit
-	int size=10;
-	////type //enum? int?
-	boolean alive = false;
-	//sprite
+	protected Vector2D position = new Vector2D(1, 1);
+	protected Vector2D heading = new Vector2D(1, 1);
+	protected double speed = 1;
+	private int ID = hashCode(); // java implicit. check later temp
+	private int size = 10;
+	//// type //enum? int?
+	protected boolean alive = true;
+	
+	protected Color mycol = Color.blue;//temp replace w sprite
+
+	// sprite
 	public void move() {
-		position.add(heading.scalarMultiply(speed));
+		position = position.add(heading.scalarMultiply(speed));
 	}
-	public boolean isAlive() {
-		return alive; 
-	}
-	//+collidedWith(entity)
-	//-ded()
+
+	
+	// +collidedWith(entity)
+	// -ded()
 	@Override
 	public void draw(Graphics g) {
-		g.fillRect((int) position.getX(), (int)position.getY(), (int)position.getX()+size, (int)position.getX()+size);
-		
+		g.setColor(mycol);
+		g.fillRect((int)position.getX(), (int) position.getY(), size, size);
+	}
+	public boolean isAlive() {//inline this TODO
+		return alive;
+	}
+	@Override
+	public boolean isVisible() {
+		return isAlive();
+	}
+
+
+	public Vector2D getHeading() {
+		return heading;
+	}
+
+
+	public void setHeading(Vector2D heading) {
+		this.heading = heading;
+	}
+
+
+	public double getSpeed() {
+		return speed;
+	}
+
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+
+	public int getID() {
+		return ID;
 	}
 }

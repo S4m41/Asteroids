@@ -6,15 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="A:/Users/Nahrwals/eclipse-workspace/Asteroids/lib/commons-math3-3.6.1/commons-math3-3.6.1.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="A:/Users/Nahrwals/eclipse-workspace/Asteroids/lib/commons-math3-3.6.1/commons-math3-3.6.1-javadoc.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="A:/Users/Nahrwals/eclipse-workspace/Asteroids/lib/commons-math3-3.6.1/commons-math3-3.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

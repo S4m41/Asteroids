@@ -19,11 +19,12 @@ game
 	
 	
 	for(entity: ship)
-		ship.move();
-		for(entity::asteroids:a)
-			if((ship.doescollide(a))
-				ship.collidedWith(type:asteroid)
-		ship.isdead();
+		position = ship.calcnewpos();
+		cEntity = world.doescollide(ship.pos);//do i collide with anything at this position.needs size
+		if(!cEntity equals null)
+				ship.colidedWith(cEntity.type);
+		else
+			world.updateposition(ship)//uses size id,size and pos	
 		
 		§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 	

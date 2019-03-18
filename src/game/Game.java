@@ -1,39 +1,65 @@
 package game;
 
-import java.awt.Graphics;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import game.entity.Entity;
 import game.world.World;
+import main.Screen;
 
 public class Game{
 	
 	private World currentWorld;
-	// the list of all entities
-	private ArrayList<Entity> entityList;
-	private JFrame screen;
+	private JFrame frame;
+	private Screen screenPane;
 	
-	public GameState currentState = GameState.unidentified;
+	public GameState currentState = GameState.unidentified;//bad statename
 	
 
 	public Game() {
-
 		setState(GameState.starting);
-		this.currentWorld = new World();
-		this.entityList = new ArrayList<Entity>();
+		init();
 	}
 
-	// do initial setup,, create own exception
-	public void start() throws IllegalStateException {
+
+	// do initial setup,, create own exception, TODO rename
+	private void init() throws IllegalStateException {
+		initWindow();
+		
+		this.setCurrentWorld(new World());
+		
+		
+		setState(GameState.running);
+	}
+	//temp block for window init move to own function 
+	private void initWindow() throws IllegalStateException {
 		// do stuffs. init jframe here. perhaps own thread?
 		if (getState() != GameState.starting)
 			throw new IllegalStateException();
-		setState(GameState.running);
-		this.run();
+		
+		//init the new frame and  set size and closing behaviour
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(new Dimension(500, 500));//temp do this in config file
+		
+		//create instance of child of jpane. use to paint to the frame
+		screenPane = new Screen();
+		screenPane.init(frame.getSize());
+		
+		//native doublebuffering. trustworthy?
+		screenPane.setDoubleBuffered(true);
+		//bind pane to frame
+		frame.setContentPane(screenPane);
+
+		frame.setVisible(true);
+		frame.requestFocus();
+		
 	}
 	// main loop of the program
-	private void run() {
+	public void run() {
+		if (getState() != GameState.running)
+			throw new IllegalStateException();
 		long last = System.nanoTime();
 		
 		int tFps = 60;
@@ -45,11 +71,12 @@ public class Game{
 			long now = System.nanoTime();// slow call?
 			long timeTaken = now - last;
 			last = now;
-			double delta = timeTaken / ((double) optimum);//XXX wrong
+			double delta = timeTaken / ((double) optimum);
 			
+			//update the system
 			update(delta);
-			draw();
-			render();
+			//repaint all
+			screenPane.repaint();
 			
 			lastTick += timeTaken;
 			fps++;
@@ -61,7 +88,7 @@ public class Game{
 			}
 			long sleeptime = (long) ((last - System.nanoTime() + optimum) / 1e6);
 			try {
-				Thread.sleep(sleeptime);
+				Thread.sleep(sleeptime);//?? replace with wait?
 			} catch (InterruptedException e) {
 			}
 
@@ -70,30 +97,8 @@ public class Game{
 	}
 
 	private void update(double delta) {
-		// update all entities. move to separate function?
-		for (Entity e : entityList) {
-			e.move();
-			if (!e.isAlive()) {
-				// TODO remove from list
-			}
-
-			if (e instanceof Entity) {//TODO visitor pattern? do nt le this start. leaks ahoy
-				entityList.add(new Entity());
-			}
-		}
-
+		currentWorld.update(delta);
 	}
-
-	private void draw() {
-		// TODO Auto-generated method stub draw to graphics object
-
-	}
-	public void paint( Graphics g){        g.drawString( "Hej, mr Universum!", 100,100);    }
-	private void render() {
-		// TODO Auto-generated method stub
-
-	}
-
 	private boolean isRunning() {
 		return getState() == GameState.running;
 	}
@@ -106,4 +111,17 @@ public class Game{
 		this.currentState = state;
 
 	}
+	
+	private void setCurrentWorld(World braveNewWorld) {
+		//add the new world to be drawn
+		screenPane.addDrawable(braveNewWorld);
+		
+		//flag the old world to be discarded
+		currentWorld.setActive(false);
+		
+		//replace wolds
+		this.currentWorld = braveNewWorld;
+		currentWorld.setActive(true);
+	}
+
 }
