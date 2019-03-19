@@ -63,6 +63,23 @@ public abstract class Entity implements Drawable {
 		g.fillRect((int) position.getX(), (int) position.getY(), size, size);
 	}
 
+	public void wrap(Vector2D worldPosition) {
+		// TODO Auto-generated method stub
+		// if(Vector2D.angle(arg0, arg1)))//doesnt support negative angles
+		Vector2D newwrappos = new Vector2D(wrapAround(position.getX(), worldPosition.getX()),
+				wrapAround(position.getY(), worldPosition.getY()));
+		this.position = newwrappos;
+	
+	}
+
+	/*
+	 * https://codereview.stackexchange.com/questions/58063/screen-wraparound
+	 */
+	private static double wrapAround(double coordinate, double max) {
+		coordinate %= max;
+		return (coordinate < 0) ? coordinate + max : coordinate;
+	}
+
 	public boolean isAlive() {// inline this TODO
 		return alive;
 	}
@@ -98,6 +115,9 @@ public abstract class Entity implements Drawable {
 	public Vector2D getPosition() {
 		return position;
 	}
+	public Vector2D getOldPosition() {
+		return oldposition;
+	}
 
 	public void setPosition(Vector2D position) {
 		this.position = position;
@@ -105,24 +125,7 @@ public abstract class Entity implements Drawable {
 
 	public void setPosition(double x, double y) {
 		setPosition(new Vector2D(x, y));
-
-	}
-
-	public void wrap(Vector2D worldPosition) {
-		// TODO Auto-generated method stub
-		// if(Vector2D.angle(arg0, arg1)))//doesnt support negative angles
-		Vector2D newwrappos = new Vector2D(wrapAround(position.getX(), worldPosition.getX()),
-				wrapAround(position.getY(), worldPosition.getY()));
-		this.position = newwrappos;
-
-	}
-
-	/*
-	 * https://codereview.stackexchange.com/questions/58063/screen-wraparound
-	 */
-	private static double wrapAround(double coordinate, double max) {
-		coordinate %= max;
-		return (coordinate < 0) ? coordinate + max : coordinate;
+	
 	}
 
 }

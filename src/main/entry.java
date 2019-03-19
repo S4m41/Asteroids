@@ -10,7 +10,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import game.Game;
 import game.entity.Entity;
-import game.world.EntityMap;
+import game.world.EntityMapVVE;
 import game.world.EntityNode;
 import game.world.World;
 

@@ -18,7 +18,7 @@ public class Bullet extends Entity {
 		// TODO Auto-generated method stub
 		Vector2D  distance = heading.scalarMultiply(speed*delta);
 		distanceTraveled += square(distance.getX())+square(distance.getY());
-		System.out.println(distanceTraveled);
+		//System.out.println(distanceTraveled);
 		if(distanceTraveled>decaydistance) {
 			this.alive = false;
 		}
