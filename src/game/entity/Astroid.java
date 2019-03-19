@@ -4,7 +4,7 @@ import game.world.World;
 
 public class Astroid extends Entity {
 
-	Astroid(World home) {
+	public Astroid(World home) {
 		super(home);
 		// TODO Auto-generated constructor stub
 	}

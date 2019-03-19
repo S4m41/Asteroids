@@ -1,22 +1,19 @@
 package game.world;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import game.entity.Entity;
 
-public class EntityMap extends Vector<Vector<EntityNode>> {
+public class EntityMap extends Vector<Vector<EntityNode>> {// too slow. use sort and sweep or some kind of tree// use quadtree
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 648795001271499834L;
 	private ArrayList<Entity> itarateList = new ArrayList<Entity>();
-	private Dimension tileSize = new Dimension(10, 10);
-
-	public EntityMap() {
-		this(new Dimension(50, 50));
-	}
+	private static Dimension tileSize = new Dimension(10, 10);
 
 	public EntityMap(Dimension d) {
 
@@ -41,17 +38,17 @@ public class EntityMap extends Vector<Vector<EntityNode>> {
 		return this.get(xGrid).get(yGrid);
 
 	}
-
-	public void add(Entity e) {
-		Dimension d = getGridPosition(e);
+	
+	public void add(Entity e) {//TODO add index guards
+		Dimension d = getGridPosition(e.getPosition());
 		int x= d.width;
 		int y = d.height;
 		this.get(x).get(y).add(e);
 		itarateList.add(e);
 	}
 
-	public void remove(Entity e) {
-		Dimension d = getGridPosition(e);
+	public void remove(Entity e) {//TODO add index guards
+		Dimension d = getGridPosition(e.getPosition());
 		int x= d.width;
 		int y = d.height;
 		this.get(x).get(y).remove(e);
@@ -62,14 +59,21 @@ public class EntityMap extends Vector<Vector<EntityNode>> {
 		return itarateList;
 		
 	}
-	public Dimension getGridPosition(Entity e) {
-		int x = ((int) e.getPosition().getX())/tileSize.width;
-		int y = ((int) e.getPosition().getY())/tileSize.height;
+	public static Dimension getGridPosition(Vector2D vpos) {
+		int x = ((int) vpos.getX())/tileSize.width;
+		int y = ((int) vpos.getY())/tileSize.height;
 		return new Dimension(x,y);
 	}
-
-	public Dimension getTileSize() {
-		return tileSize;
+	public static Vector2D getWorldPosition(Dimension d) {
+		int x = ((int) d.getWidth())*tileSize.width;
+		int y = ((int) d.getHeight())*tileSize.height;
+		return new Vector2D(x,y);
+	}
+	public void update(Entity entity) {
+		//remove(entity);//implement quadtrees 
+		//add(entity);
+		// TODO Auto-generated method stub
+		
 	}
 
 }

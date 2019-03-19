@@ -15,6 +15,8 @@ public class Game{
 	private Screen screenPane;
 	
 	public GameState currentState = GameState.unidentified;//bad statename
+	private boolean timestepisfixed = false;
+	private long fixedtimestep = 500;
 	
 
 	public Game() {
@@ -87,6 +89,9 @@ public class Game{
 				fps = 0;
 			}
 			long sleeptime = (long) ((last - System.nanoTime() + optimum) / 1e6);
+			if(timestepisfixed) {
+				sleeptime = fixedtimestep;
+			}
 			try {
 				Thread.sleep(sleeptime);//?? replace with wait?
 			} catch (InterruptedException e) {

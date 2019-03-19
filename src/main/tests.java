@@ -1,5 +1,10 @@
 package main;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+
+import game.entity.Entity;
+import game.world.World;
+
 public class tests {
 	/**
 	 * @SuppressWarnings("unused") private static void entityMapTest() { Dimension
@@ -113,5 +118,39 @@ public class tests {
 	 * Thread.sleep(sleeptime); } catch (InterruptedException ierr) { }
 	 * 
 	 * } while (frame.isVisible()); }
+	 * 
+	 * 	private static void wraptest() {
+		System.out.println(wrapAround(42, 50));
+		System.out.println(wrapAround(-42, 50));
+		System.out.println(wrapAround(50, 50));
+		System.out.println(wrapAround(-50, 50));
+		System.out.println(wrapAround(142, 50));
+		System.out.println(wrapAround((float) -142.0, 50));
+	}
+	
+	private static float wrapAround(float coordinate, float max) {
+	    coordinate %= max;
+	    return (coordinate < 0) ? coordinate + max : coordinate;
+	}
+		@SuppressWarnings("unused")
+	private static void vectortest() {
+		Vector2D v0 = new Vector2D(0, 0);
+		Vector2D v1 = new Vector2D(1, 0);
+		Vector2D v2 = new Vector2D(-1,0);
+		
+		System.out.println(Vector2D.angle(v1, v2));
+	}
+		@SuppressWarnings("unused")
+	private static void entitymoveTest(){
+		World w = new World();
+		Entity e = new Entity(w);//temp add entity()
+		e.setPosition(new Vector2D(1,0));
+		e.setHeading(new Vector2D(0,1));
+		e.setSpeed(142.0);
+		e.move(1);
+		e.wrap(new Vector2D(50, 50));
+		System.out.println(e.getPosition());
+	}
+}
 	 */
 }
