@@ -3,7 +3,11 @@ package game.world;
 import java.util.ArrayList;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import game.entity.Entity;
-
+/**
+ * TODO make threadsafe
+ * @author Nahrwals
+ *
+ */
 public class EntityMap {
 	QuadTree storage;
 	ArrayList<Entity> containedList = new ArrayList<Entity>();
@@ -35,9 +39,12 @@ public class EntityMap {
 	}
 	//happens once per frame
 	public void update(Entity entity) {
-		AABB shake = new AABB(entity.getOldPosition(), 1, 1);
-		
-		// TODO Auto-generated method stub
+		storage.update(entity);
+
+	}
+	public void remove(Entity entity) {
+		storage.remove(entity);
+		containedList.remove(entity);
 
 	}
 
@@ -66,6 +73,69 @@ public class EntityMap {
 		// Methods
 		QuadTree(AABB _boundary) {
 			boundary = _boundary;
+		}
+
+		public boolean remove(Entity entity) {
+			// Automatically abort if the range does not intersect this quad
+						if (!boundary.containsPoint(entity.getOldPosition()))
+							return false; // empty list
+
+						// Check objects at this quad level
+						for (int p = 0; p < points.size(); p++) {
+							if (points.get(p) == entity) {
+								points.remove(entity);
+								points.add(entity);
+								points.trimToSize();
+								return true;
+							}
+								
+								
+						}
+
+						// Terminate here, if there are no children
+						if (northWest == null)
+							return false;
+
+						// Otherwise, add the points from the children
+						northWest.update(entity);
+						northEast.update(entity);
+						southWest.update(entity);
+						southEast.update(entity);
+
+						return false;
+			
+		}
+
+		public boolean update(Entity entity) {
+
+			// Automatically abort if the range does not intersect this quad
+			if (!boundary.containsPoint(entity.getOldPosition()))
+				return false; // empty list
+
+			// Check objects at this quad level
+			for (int p = 0; p < points.size(); p++) {
+				if (points.get(p) == entity) {
+					points.remove(entity);
+					points.add(entity);
+					points.trimToSize();
+					return true;
+				}
+					
+					
+			}
+
+			// Terminate here, if there are no children
+			if (northWest == null)
+				return false;
+
+			// Otherwise, add the points from the children
+			northWest.update(entity);
+			northEast.update(entity);
+			southWest.update(entity);
+			southEast.update(entity);
+
+			return false;
+			
 		}
 
 		boolean insert(Entity p) {
