@@ -19,6 +19,26 @@ public class Ship extends Entity {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void move(double delta) {
+		// TODO Auto-generated method stub
+		super.move(delta);
+		lastFire += 1 * delta;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		g.setColor(mycol);
+		g.fillOval((int) position.getX(), (int) position.getY(), size, size);
+	}
+
+	@Override
+	protected void colidedWith(Entity cEntity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void shouldfire() {
 		if (lastFire > fireRate) {
 			fireFlag = true;
@@ -36,24 +56,11 @@ public class Ship extends Entity {
 	}
 
 	@Override
-	public void move(double delta) {
-		// TODO Auto-generated method stub
-		super.move(delta);
-		lastFire += 1 * delta;
-	}
-
-	@Override
 	public void setHeading(Vector2D heading) {
 		if (!heading.getZero().equals(heading)) {
 			lastNZHeading = heading;
 		}
 		super.setHeading(heading);
-	}
-	@Override
-	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		g.setColor(mycol);
-		g.fillOval((int) position.getX(), (int) position.getY(), size, size);
 	}
 	/***
 	 * 
@@ -62,12 +69,6 @@ public class Ship extends Entity {
 	public Vector2D getLNZHeading() {
 		// TODO Auto-generated method stub
 		return lastNZHeading;
-	}
-
-	@Override
-	protected void colidedWith(Entity cEntity) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

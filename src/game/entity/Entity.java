@@ -10,6 +10,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrappe
 
 import game.world.World;
 import main.Drawable;
+import main.entry;
 
 public abstract class Entity implements Drawable {
 
@@ -20,7 +21,7 @@ public abstract class Entity implements Drawable {
 	protected boolean alive = true;
 	protected Color mycol = Color.blue;// temp replace w sprite
 
-	private final int ID = hashCode(); // java implicit. check later temp
+	private final int ID = hashCode(); //temp java implicit. check later assuming unique
 	protected int size = 10;
 
 	protected Vector2D oldposition = getPosition();
@@ -126,6 +127,15 @@ public abstract class Entity implements Drawable {
 	public void setPosition(double x, double y) {
 		setPosition(new Vector2D(x, y));
 	
+	}
+	@Override
+	public boolean equals(Object obj) {
+		//probably unnecessary;
+		if(obj instanceof Entity) {
+			Entity e = (Entity) obj;
+			return getID()==e.getID();
+		}
+		return super.equals(obj);
 	}
 
 }

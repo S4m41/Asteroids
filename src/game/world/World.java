@@ -48,6 +48,7 @@ public class World implements Drawable {
 			if (e.isAlive()) {
 				delta = 1;//XXX
 				e.move(delta);
+				entityMap.update(e);
 			}else {
 				deadlist.add(e);
 			}
@@ -61,7 +62,9 @@ public class World implements Drawable {
 			player.fire();
 		}
 		//remove all dead entities from loop
-		nowloop.removeAll(deadlist);
+		for(Entity e : deadlist) {
+			entityMap.remove(e);
+		}
 		deadlist.clear();
 		// tell all to resolve collisions
 		// generate asteroids and ask ship if generate bullets
@@ -78,7 +81,6 @@ public class World implements Drawable {
 	public void updateposition(Entity entity) {
 
 		entity.wrap(EntityMap.getWorldPosition(worldSize)); //delays wrap by one frame
-		entityMap.update(entity);
 	}
 	public Entity doescollide(Vector2D position) {
 		// TODO Auto-generated method stub
@@ -86,9 +88,16 @@ public class World implements Drawable {
 	}
 	@Override
 	public void draw(Graphics g) {
-		for(Entity e : entityMap.getContainedEntities()) {
-			e.draw(g);
+		try {
+			for(Entity e : entityMap.getContainedEntities()) {
+				e.draw(g);
+			}
+		}catch(java.util.ConcurrentModificationException e) {
+			System.out.println("---------------------------------");
+			System.out.println("ConcurrentModificationException!!");
+			System.out.println("---------------------------------");
 		}
+		
 
 	}
 

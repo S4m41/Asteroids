@@ -21,6 +21,7 @@ public class Astroid extends Entity {
 
 	@Override
 	protected void colidedWith(Entity cEntity) {
+
 		// TODO Auto-generated method stub
 		
 	}

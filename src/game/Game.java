@@ -11,12 +11,12 @@ import game.world.World;
 import main.Screen;
 
 public class Game {
-
+	private GameState currentState = GameState.unidentified;// bad statename
+	
 	private World currentWorld;
 	private JFrame frame;
 	private Screen screenPane;
-
-	public GameState currentState = GameState.unidentified;// bad statename
+	private int tFps = 60;
 	private boolean timestepisfixed = false;
 	private long fixedtimestep = 500;
 
@@ -65,7 +65,7 @@ public class Game {
 			throw new IllegalStateException();
 		long last = System.nanoTime();
 
-		int tFps = 60;
+		
 		long optimum = ((long) (1e9) / tFps);
 
 		int fps = 0;
