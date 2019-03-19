@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import game.entity.Astroid;
+import game.entity.Bullet;
 import game.entity.Entity;
 import game.entity.Ship;
 import jdk.nashorn.api.tree.ForInLoopTree;
@@ -20,19 +21,23 @@ public class World implements Drawable {
 	Dimension worldSize = new Dimension(50, 50);
 	EntityMap entityMap; //too slow restructure
 	//ArrayList<Entity> entityMap = new ArrayList<Entity>();
-
+	Ship player = new Ship(this);
+	
 	public World() {
 		entityMap = new EntityMap(worldSize);
 		
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 0; i++) {
 			Astroid e = new Astroid(this);
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			//e.setHeading(new Vector2D(x, y));
+			e.setHeading(new Vector2D(x, y));
 			entityMap.add(e);
 			
 		}
-		
+		entityMap.add(player);
+		Vector2D worldmiddle = EntityMap.getWorldPosition(worldSize).scalarMultiply(0.5);
+		player.setPosition(worldmiddle);
+		player.setHeading(new Vector2D(0,0));
 	}
 
 	public void update(double delta) {
@@ -49,6 +54,14 @@ public class World implements Drawable {
 			}else {
 				deadlist.add(e);
 			}
+		}
+		if(player.isFiring()) {//temp
+			Bullet b = new Bullet(this);
+			b.setHeading(player.getLNZHeading());
+			b.setPosition(player.getPosition());
+			b.setPosition(b.calcNewPos(delta));
+			entityMap.add(b);
+			player.fire();
 		}
 		//remove all dead entities from loop
 		nowloop.removeAll(deadlist);
@@ -89,6 +102,31 @@ public class World implements Drawable {
 
 	public void setActive(boolean b) {
 		visible = b;
+	}
+
+	public void setKeyInput(boolean[] direction) {
+		/*
+		for(int i = 0; i<4; i++) {
+			if(direction[i] && !direction[(i+2)%4]) {
+				
+			}
+		}*/
+		int xheading = 0, yheading =0;
+		if(direction [0] && !direction[2]) {
+			yheading = -1;
+		}else if(direction [2] && !direction[0]) {
+			yheading = 1;
+		}
+		if (direction [1] && !direction[3]) {
+			xheading = -1;
+		}else if (direction [3] && !direction[1]) {
+			xheading = 1;
+		}
+		player.setHeading(new Vector2D(xheading, yheading));
+		if(direction[4]) {//inefficient
+			player.shouldfire();
+		}
+		
 	}
 
 }

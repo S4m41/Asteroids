@@ -8,8 +8,8 @@ import java.util.Vector;
 import game.entity.Entity;
 
 public class EntityMap extends Vector<Vector<EntityNode>> {// too slow. use sort and sweep or some kind of tree// use quadtree
-	/**
-	 * 
+	/*
+	 * https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
 	 */
 	private static final long serialVersionUID = 648795001271499834L;
 	private ArrayList<Entity> itarateList = new ArrayList<Entity>();
@@ -43,7 +43,7 @@ public class EntityMap extends Vector<Vector<EntityNode>> {// too slow. use sort
 		Dimension d = getGridPosition(e.getPosition());
 		int x= d.width;
 		int y = d.height;
-		this.get(x).get(y).add(e);
+		this.get(x%50).get(y%50).add(e);//XXX remove mod 50 and add some other guard
 		itarateList.add(e);
 	}
 
