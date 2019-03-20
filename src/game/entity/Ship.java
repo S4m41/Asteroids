@@ -12,7 +12,7 @@ public class Ship extends Entity {
 	Vector2D lastNZHeading = new Vector2D(1, 0);
 	double lastFire = 0;
 	final int coolDown = 10;
-	private static boolean deathmsg = true;
+	private static boolean deathmsg = false;
 
 	public Ship(World home) {
 		super(home);

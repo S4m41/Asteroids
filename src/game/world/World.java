@@ -38,8 +38,8 @@ public class World implements Drawable {
 			Astroid e = new Astroid(this);
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			e.setPosition(new Vector2D(i%500, 150));
-			e.setHeading(new Vector2D(x, y));
+			e.setPosition(new Vector2D(i%500,0));
+			e.setHeading(new Vector2D(0, 1));
 			e.setSpeed(1);
 			e.setSize(ThreadLocalRandom.current().nextInt(9, 50));
 			add(e);
