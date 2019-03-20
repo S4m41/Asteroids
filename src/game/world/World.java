@@ -33,15 +33,15 @@ public class World implements Drawable {
 		player.setPosition(worldmiddle);
 		player.setHeading(new Vector2D(0,0));
 		
-		for (int i = 0; i < 500; i+=30) {
+		for (int i = 0; i < 1; i+=1) {
 			
 			Astroid e = new Astroid(this);
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			e.setPosition(new Vector2D(i%500,0));
+			e.setPosition(new Vector2D((i+50)%500,100));
 			e.setHeading(new Vector2D(0, 1));
-			e.setSpeed(1);
-			e.setSize(ThreadLocalRandom.current().nextInt(9, 50));
+			e.setSpeed(0);
+			e.setSize(20);//ThreadLocalRandom.current().nextInt(9, 50));
 			add(e);
 		}
 	}
@@ -92,6 +92,7 @@ public class World implements Drawable {
 		//remove all dead entities from loop
 		for(Entity e : deadlist) {
 			entityMap.remove(e);
+			System.out.println(e);
 		}
 		deadlist.clear();
 		// tell all to resolve collisions

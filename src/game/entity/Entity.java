@@ -51,7 +51,7 @@ public abstract class Entity implements Drawable {
 		//ArrayList<Entity> notIt = new ArrayList<Entity>();
 		for(Entity collisionPartner: cEntityList){
 			if(collisionPartner!=this)
-				if(!(square(this.size+collisionPartner.size)< square(position.distance(collisionPartner.position)))) {//XXX test expression
+				if(!(this.size/2+collisionPartner.size/2< position.distance(collisionPartner.position))) {//XXX test expression
 					if(this.colidedWith(collisionPartner))
 						break;
 			}
@@ -169,7 +169,7 @@ public abstract class Entity implements Drawable {
 	public String toString() {
 		// TODO Auto-generated method stub
 		String val =super.toString(); 
-		return val.substring(val.lastIndexOf('.'),val.indexOf('@'))  + " ID:"+getID()+ position.toString();
+		return val.substring(val.lastIndexOf('.'),val.indexOf('@'))  + " ID:"+getID()+ position.toString() +"size:" + size;
 	}
 
 }

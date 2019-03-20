@@ -12,7 +12,7 @@ public class Ship extends Entity {
 	Vector2D lastNZHeading = new Vector2D(1, 0);
 	double lastFire = 0;
 	final int coolDown = 10;
-	private static boolean deathmsg = false;
+	private static boolean deathmsg = true;
 
 	public Ship(World home) {
 		super(home);
@@ -30,7 +30,7 @@ public class Ship extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(mycol);//TODO sprites
-		g.fillOval((int) position.getX(), (int) position.getY(), size, size);
+		g.fillOval((int) position.getX()-size/2, (int) position.getY()-size/2, size, size);
 	}
 
 	@Override
@@ -38,7 +38,9 @@ public class Ship extends Entity {
 		if(cEntity instanceof Astroid && deathmsg ) {
 			System.out.println("§§§§§§§§");
 			System.out.println("ya DED");
+			System.out.println(cEntity + ""+ this);
 			System.out.println("§§§§§§§§");
+			
 			return true;
 		}
 		// TODO Auto-generated method stub

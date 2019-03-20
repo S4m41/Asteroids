@@ -45,6 +45,7 @@ public class Astroid extends Entity {
 			if(size>10) {
 				split= true;
 			}
+			System.out.println("bonk");
 			alive=false;
 			cEntity.alive=false;
 			return true;
