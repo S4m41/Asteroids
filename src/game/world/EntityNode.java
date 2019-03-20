@@ -3,7 +3,7 @@ package game.world;
 import java.util.ArrayList;
 
 import game.entity.Entity;
-
+@Deprecated
 public class EntityNode extends ArrayList<Entity>{//stack?
 
 	/**
