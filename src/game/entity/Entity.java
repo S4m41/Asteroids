@@ -28,7 +28,7 @@ public abstract class Entity implements Drawable {
 	private World myworld;
 
 	public Entity(World home) {// temp public make protected and add public argless constructor
-		myworld = home;
+		setMyworld(home);
 		int red, blue, green;
 		do {
 			red = ThreadLocalRandom.current().nextInt(0, 255);
@@ -46,17 +46,17 @@ public abstract class Entity implements Drawable {
 		position = position.add(heading.scalarMultiply(speed*delta));
 		
 		
-		ArrayList<Entity> cEntityList = myworld.doescollide(position);// do i collide with anything at this position.needs size
+		ArrayList<Entity> cEntityList = getMyworld().doescollide(position);// do i collide with anything at this position.needs size
 		cEntityList.remove(this);
 		//ArrayList<Entity> notIt = new ArrayList<Entity>();
 		for(Entity collisionPartner: cEntityList){
-			if(!(square(this.size+collisionPartner.size)< square(position.distance(collisionPartner.position)))) {//XXX test expression
-				
-				if(this.colidedWith(collisionPartner))
-					break;
+			if(collisionPartner!=this)
+				if(!(square(this.size+collisionPartner.size)< square(position.distance(collisionPartner.position)))) {//XXX test expression
+					if(this.colidedWith(collisionPartner))
+						break;
 			}
 		}
-		myworld.updateposition(this);
+		getMyworld().updateposition(this);
 		
 		// System.out.println(ID);
 	}
@@ -65,7 +65,7 @@ public abstract class Entity implements Drawable {
 		return position.add(heading.scalarMultiply(speed));
 	}
 
-	protected abstract boolean colidedWith(Entity cEntity);
+	public abstract boolean colidedWith(Entity cEntity);
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(mycol);
@@ -159,10 +159,17 @@ public abstract class Entity implements Drawable {
 	private static int setID() {
 		return _IDCOUNT++;
 	}
+	public World getMyworld() {
+		return myworld;
+	}
+	public void setMyworld(World myworld) {
+		this.myworld = myworld;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return super.toString() + position.toString();// + " ID:"+getID();
+		String val =super.toString(); 
+		return val.substring(val.lastIndexOf('.'),val.indexOf('@'))  + " ID:"+getID()+ position.toString();
 	}
 
 }

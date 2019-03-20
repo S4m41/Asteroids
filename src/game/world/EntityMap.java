@@ -45,7 +45,9 @@ public class EntityMap {
 
 	// happens once per frame
 	public void update(Entity entity) {
-		storage.update(entity);
+		if(entity.isAlive())
+			storage.update(entity);
+		
 
 	}
 

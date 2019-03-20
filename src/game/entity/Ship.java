@@ -11,7 +11,8 @@ public class Ship extends Entity {
 	boolean fireFlag = false;
 	Vector2D lastNZHeading = new Vector2D(1, 0);
 	double lastFire = 0;
-	final int fireRate = 50;
+	final int coolDown = 10;
+	private static boolean deathmsg = true;
 
 	public Ship(World home) {
 		super(home);
@@ -33,8 +34,8 @@ public class Ship extends Entity {
 	}
 
 	@Override
-	protected boolean colidedWith(Entity cEntity) {
-		if(cEntity instanceof Astroid) {
+	public boolean colidedWith(Entity cEntity) {
+		if(cEntity instanceof Astroid && deathmsg ) {
 			System.out.println("§§§§§§§§");
 			System.out.println("ya DED");
 			System.out.println("§§§§§§§§");
@@ -45,7 +46,7 @@ public class Ship extends Entity {
 	}
 
 	public void shouldfire() {
-		if (lastFire > fireRate) {
+		if (lastFire > coolDown) {
 			fireFlag = true;
 			lastFire=0;
 		}

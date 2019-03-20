@@ -5,10 +5,21 @@ import game.Game;
 //main enty point of program
 public class Entry {
 	public static void main(String args[]) {
-		//Tests.stringTraceTest();
+		Tests.stringTraceTest();
 		Tests.advancedCollisionTest();
-		
-		//gameLaunch();
+		Tests.drawlistTest();
+		Tests.EIDTest();
+		Tests.entityMapTest();
+		Tests.entitymoveTest();
+		Tests.jframetest();
+		Tests.qtMovementTest();
+		Tests.simpleCollisionTest();
+		Tests.stringTraceTest();
+		Tests.updateAdvancedTest();
+		Tests.updateTest();
+		Tests.vectortest();
+		Tests.wraptest();
+		gameLaunch();
 
 	}
 

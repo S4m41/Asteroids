@@ -26,6 +26,7 @@ public class World implements Drawable {
 		entityMap = new EntityMap(worldSize);
 		
 	}
+	@SuppressWarnings("unused")
 	public void init() {
 		add(player);
 		Vector2D worldmiddle = EntityMap.getWorldPosition(worldSize).scalarMultiply(0.5);
@@ -38,8 +39,9 @@ public class World implements Drawable {
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
 			e.setPosition(new Vector2D(i%500, 150));
-			e.setHeading(new Vector2D(0, 1));
-			e.setSpeed(0);
+			e.setHeading(new Vector2D(x, y));
+			e.setSpeed(1);
+			e.setSize(ThreadLocalRandom.current().nextInt(9, 50));
 			add(e);
 		}
 	}
@@ -49,13 +51,27 @@ public class World implements Drawable {
 		ArrayList<Entity> nowloop = entityMap.getContainedEntities();
 		//list of dead entities
 		ArrayList<Entity> deadlist = new ArrayList<Entity>();
+		//list of new astroids
+		ArrayList<Astroid> bornList = new ArrayList<Astroid>();
 		int size = nowloop.size();
 		for (int i =0;i<size;i++) {
 			Entity e = nowloop.get(i);
 			if (e.isAlive()) {
-				delta = 1;//XXX
+				
 				e.move(delta);
 				entityMap.update(e);
+				
+				if(e instanceof Astroid) {//move logic somewhere lese temp
+					Astroid a = (Astroid)e;
+					if(a.hasSplit()) {
+						Astroid[] children = new Astroid[2];
+						a.getChildren(children, 2);
+						bornList.add(children[0]);
+						bornList.add(children[1]);
+					}
+				}
+					
+				
 			}else {
 				deadlist.add(e);
 			}
@@ -69,6 +85,9 @@ public class World implements Drawable {
 				add(b);
 				player.fire();	
 			
+		}
+		for(Entity a: bornList) {
+			add(a);
 		}
 		//remove all dead entities from loop
 		for(Entity e : deadlist) {
@@ -168,6 +187,15 @@ public class World implements Drawable {
 			ret += "\n Player:ded";
 		ret += "\n" + entityMap.toString();
 		return ret;
+	}
+	/**
+	 * testing function do not use
+	 * @param e1
+	 * @return 
+	 */
+	public ArrayList<Entity> getPos(Ship e1) {
+		return entityMap.queryRange(e1.getPosition(), 2);
+		
 	}
 	
 }

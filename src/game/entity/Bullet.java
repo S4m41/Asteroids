@@ -18,7 +18,6 @@ public class Bullet extends Entity {
 	}
 	@Override
 	public void move(double delta) {
-		// TODO Auto-generated method stub
 		Vector2D  distance = heading.scalarMultiply(speed*delta);
 		distanceTraveled += square(distance.getX())+square(distance.getY());
 		//System.out.println(distanceTraveled);
@@ -30,7 +29,7 @@ public class Bullet extends Entity {
 	}
 
 	@Override
-	protected boolean colidedWith(Entity cEntity) {
+	public boolean colidedWith(Entity cEntity) {
 		// TODO Auto-generated method stub
 		return false;
 	}

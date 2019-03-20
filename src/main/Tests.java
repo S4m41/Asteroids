@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -95,6 +97,7 @@ public class Tests {
 			long now = System.nanoTime();// slowcall?
 			long timeTaken = now - last;
 			last = now;
+			@SuppressWarnings("unused")
 			double delta = timeTaken / ((double) optimum);// XXX wrong
 
 			test.repaint();
@@ -118,7 +121,7 @@ public class Tests {
 	}
 
 	@SuppressWarnings("unused")
-	public static void updateAdvancedTest() {//change to use current game
+	public static void updateAdvancedTest() {// change to use current game
 		// create frame and set behaviour
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,7 +222,7 @@ public class Tests {
 		e.wrap(new Vector2D(50, 50));
 		System.out.println(e.getPosition());
 	}
-
+	@SuppressWarnings("unused")
 	public static void simpleCollisionTest() {
 		World w = new World();
 		Ship e1 = new Ship(w);
@@ -239,11 +242,12 @@ public class Tests {
 		radsq = square(radsq);
 		double distsq = (e1.getPosition().distance(e2.getPosition()));
 		System.out.println("distadd:" + distsq + "\t\t  radsq:" + square(distsq));
-		distsq= square(distsq);
+		distsq = square(distsq);
 		if (radsq >= distsq) {
 			System.out.println("Collision");
 		}
 	}
+
 	public static void advancedCollisionTest() {
 		World w = new World();
 		Ship e1 = new Ship(w);
@@ -260,12 +264,90 @@ public class Tests {
 		w.add(e1);
 		w.add(e2);
 		System.out.println(w.toString());
-		
+
 		ArrayList<Entity> poss = w.doescollide(e1.getPosition());
-		
+		for(Entity e3 :poss) {
+			
+		}
+		System.out.println(poss.toString());
+		e1.colidedWith(e2);
+		// TODO XXX
 	}
-	public static void stringTraceTest(){
-		//double delta = 1;
+	@SuppressWarnings("unused")
+	public static void qtMovementTest() {
+		World w = new World();
+		Ship e1 = new Ship(w);
+		e1.setSpeed(50);
+
+		e1.setPosition(new Vector2D(0, 0));
+		e1.setHeading(new Vector2D(10, 0.1));
+		e1.setSize(5);
+		w.init();
+		w.add(e1);
+		System.out.println(w.toString());
+		System.out.println(e1.toString());
+		System.out.println("-----------------------------------------");
+
+		String listw = "";
+		String listn = "";
+		PrintWriter outw = null;
+		PrintWriter outn = null;
+		try {
+			outw = new PrintWriter("listw.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		try {
+			outn = new PrintWriter("listn.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		//int wierd = 0; // 6250018/50000000
+		for (int i = 0; i < 5000*5; i++) {
+			e1.move(1);
+			Vector2D pos = e1.getPosition();
+			int x = (int) pos.getX();
+			int y = (int) pos.getY();
+			
+			ArrayList<Entity> cand = w.getPos(e1);
+			
+			for (Entity e : cand) {
+				if (e == e1&& e instanceof Ship) {
+					Vector2D pos1 = e.getPosition();
+					int x1 = (int) pos1.getX();
+					int y1 = (int) pos1.getY();
+
+					listn += x1 + "," + y1 + "\n";
+				}
+			}
+
+			String l = "";
+			if (i % 5000 == 0) {
+				if (i % 500000 == 0) {
+					l = "\n§";
+				} else {
+					l = ".";
+				}
+			}
+			System.out.print(l);
+			// System.out.println(s);
+			// System.out.println(e1.toString());
+			// System.out.println("-----------------------------------------");
+		}
+		System.out.println("§!");
+		outw.print(listw);
+		outn.print(listn);
+		outw.close();
+		outn.close();
+		// System.out.println("\n"+listw);
+		//System.out.println(wierd);
+
+	}
+
+	public static void stringTraceTest() {
+		// double delta = 1;
 		World w = new World();
 		Ship e1 = new Ship(w);
 		Astroid e2 = new Astroid(w);
@@ -283,17 +365,16 @@ public class Tests {
 		w.init();
 		String s = w.toString();
 		System.out.println("" + s);
-		
-		
-		
+
 	}
-	public static void EIDTest(){
+
+	public static void EIDTest() {
 		World w = new World();
-		for(int i =0 ; i<10;i++) {
-			System.out.println(new Astroid(w).getID()+"\n");
+		for (int i = 0; i < 10; i++) {
+			System.out.println(new Astroid(w).getID() + "\n");
 		}
 	}
-	
+
 	private static double square(double d) {
 		return d * d;
 	}
