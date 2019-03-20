@@ -3,6 +3,7 @@ package game.entity;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,7 +14,7 @@ import main.Drawable;
 import main.entry;
 
 public abstract class Entity implements Drawable {
-
+	public static final int MAXSIZE = 50;
 	protected Vector2D position = new Vector2D(1, 1);
 	protected Vector2D heading = new Vector2D(1, 1);
 	protected double speed = 2;
@@ -25,8 +26,9 @@ public abstract class Entity implements Drawable {
 	protected int size = 10;
 
 	protected Vector2D oldposition = getPosition();
-
-	World myworld;
+	// sprite
+	
+	private World myworld;
 
 	public Entity(World home) {// temp public make protected and add public argless constructor
 		myworld = home;
@@ -38,17 +40,26 @@ public abstract class Entity implements Drawable {
 		} while (red + blue + green < 100);
 		mycol = new Color(red, green, blue);
 	}
-
-	// sprite
+	protected static double square(double d) {
+		return d*d;
+	}
+	
 	public void move(double delta) {
 		oldposition = position;
 		position = position.add(heading.scalarMultiply(speed*delta));
-		Entity cEntity = myworld.doescollide(position);// do i collide with anything at this position.needs size
-		if (cEntity != null) {
-			this.colidedWith(cEntity);
-		} else {
-			myworld.updateposition(this);
+		
+		
+		ArrayList<Entity> cEntityList = myworld.doescollide(position);// do i collide with anything at this position.needs size
+		//ArrayList<Entity> notIt = new ArrayList<Entity>();
+		for(Entity collisionPartner: cEntityList){
+			if(!(square(this.size+collisionPartner.size)< square(position.distance(collisionPartner.position)))) {//XXX test expression
+				
+				if(this.colidedWith(collisionPartner))
+					break;
+			}
 		}
+		myworld.updateposition(this);
+		
 		// System.out.println(ID);
 	}
 
@@ -56,8 +67,7 @@ public abstract class Entity implements Drawable {
 		return position.add(heading.scalarMultiply(speed));
 	}
 
-	protected abstract void colidedWith(Entity cEntity);
-	// -ded()
+	protected abstract boolean colidedWith(Entity cEntity);
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(mycol);
@@ -136,6 +146,23 @@ public abstract class Entity implements Drawable {
 			return getID()==e.getID();
 		}
 		return super.equals(obj);
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public boolean setSize(int size) {
+		if(size<MAXSIZE)
+			this.size = size;
+		else
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString() + position.toString();// + " ID:"+getID();
 	}
 
 }

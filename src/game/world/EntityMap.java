@@ -17,8 +17,9 @@ public class EntityMap {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void add(Entity e) {
-		storage.insert(e);
+	public void add(Entity e) throws QuadtreeExeption {
+		if(!storage.insert(e))
+			throw new QuadtreeExeption();
 		containedList.add(e);
 		// TODO Auto-generated method stub
 
@@ -47,7 +48,11 @@ public class EntityMap {
 		containedList.remove(entity);
 
 	}
-
+	ArrayList<Entity> queryRange(Vector2D center, double distance){
+		return storage.queryRange(new AABB(center, distance, distance));
+		
+	}
+	
 	/**
 	 * 
 	 * @author Wikipedia https://en.wikipedia.org/wiki/Quadtree
@@ -181,10 +186,11 @@ public class EntityMap {
 				double x = boundary.center.getX();
 				double y = boundary.center.getY();
 
-				southEast = new QuadTree(new AABB (new Vector2D(x + halfDimensionx, y), halfDimensionx,halfDimensiony));//no negative Y?? @samai
-				southWest = new QuadTree(new AABB (new Vector2D(x, y), halfDimensionx,halfDimensiony));
-				northWest = new QuadTree(new AABB (new Vector2D(x, y + halfDimensiony), halfDimensionx,halfDimensiony));
-				northEast = new QuadTree(new AABB (new Vector2D(x + halfDimensionx, y + halfDimensiony), halfDimensionx,halfDimensiony));
+				//edited to match model
+				northEast = new QuadTree(new AABB (new Vector2D(x + halfDimensionx, y - halfDimensiony ), halfDimensionx,halfDimensiony));//no negative Y?? @samai
+				northWest= new QuadTree(new AABB (new Vector2D(x - halfDimensionx, y - halfDimensiony), halfDimensionx,halfDimensiony));
+				southWest= new QuadTree(new AABB (new Vector2D(x - halfDimensionx, y + halfDimensiony), halfDimensionx,halfDimensiony));
+				southEast= new QuadTree(new AABB (new Vector2D(x + halfDimensionx, y + halfDimensiony), halfDimensionx,halfDimensiony));
 				
 			//TODO
 		} // create four children that fully divide this quad into four quads of equal
@@ -260,6 +266,9 @@ public class EntityMap {
 			return d;
 		}
 	}
-
+	@SuppressWarnings("serial")
+	class QuadtreeExeption extends Exception{
+		
+	}
 
 }

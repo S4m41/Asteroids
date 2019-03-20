@@ -25,6 +25,52 @@ public class Game {
 		init();
 	}
 
+	// main loop of the program
+	public void run() {
+		if (getState() != GameState.running)
+			throw new IllegalStateException();
+		long last = System.nanoTime();
+	
+		
+		long optimum = ((long) (1e9) / tFps);
+	
+		int fps = 0;
+		double lastTick = 0;
+		do {
+			long now = System.nanoTime();// slow call?
+			long timeTaken = now - last;
+			last = now;
+			double delta = timeTaken / ((double) optimum);
+	
+			// update the system
+			update(delta);
+			// repaint all
+			screenPane.repaint();
+	
+			lastTick += timeTaken;
+			fps++;
+	
+			if (lastTick >= 1e9) {// TODO replace with observer or similar
+				System.out.println("(FPS: " + fps + ")");
+				lastTick = 0;
+				fps = 0;
+			}
+			long sleeptime = (long) ((last - System.nanoTime() + optimum) / 1e6);
+			if(sleeptime<0) {
+				sleeptime = 0;
+			}
+			if (timestepisfixed) {
+				sleeptime = fixedtimestep;
+			}
+			try {
+				Thread.sleep(sleeptime);// ?? replace with wait?
+			} catch (InterruptedException e) {
+			}
+	
+		} while (isRunning());
+	
+	}
+
 	// do initial setup,, create own exception, TODO rename
 	private void init() throws IllegalStateException {
 		initWindow();
@@ -56,52 +102,6 @@ public class Game {
 
 		frame.setVisible(true);
 		frame.requestFocus();
-
-	}
-
-	// main loop of the program
-	public void run() {
-		if (getState() != GameState.running)
-			throw new IllegalStateException();
-		long last = System.nanoTime();
-
-		
-		long optimum = ((long) (1e9) / tFps);
-
-		int fps = 0;
-		double lastTick = 0;
-		do {
-			long now = System.nanoTime();// slow call?
-			long timeTaken = now - last;
-			last = now;
-			double delta = timeTaken / ((double) optimum);
-
-			// update the system
-			update(delta);
-			// repaint all
-			screenPane.repaint();
-
-			lastTick += timeTaken;
-			fps++;
-
-			if (lastTick >= 1e9) {// TODO replace with observer or similar
-				System.out.println("(FPS: " + fps + ")");
-				lastTick = 0;
-				fps = 0;
-			}
-			long sleeptime = (long) ((last - System.nanoTime() + optimum) / 1e6);
-			if(sleeptime<0) {
-				sleeptime = 0;
-			}
-			if (timestepisfixed) {
-				sleeptime = fixedtimestep;
-			}
-			try {
-				Thread.sleep(sleeptime);// ?? replace with wait?
-			} catch (InterruptedException e) {
-			}
-
-		} while (isRunning());
 
 	}
 

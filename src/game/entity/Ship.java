@@ -28,15 +28,20 @@ public class Ship extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		g.setColor(mycol);
+		g.setColor(mycol);//TODO sprites
 		g.fillOval((int) position.getX(), (int) position.getY(), size, size);
 	}
 
 	@Override
-	protected void colidedWith(Entity cEntity) {
+	protected boolean colidedWith(Entity cEntity) {
+		if(cEntity instanceof Astroid) {
+			System.out.println("§§§§§§§§");
+			System.out.println("ya DED");
+			System.out.println("§§§§§§§§");
+			return true;
+		}
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	public void shouldfire() {

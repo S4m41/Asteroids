@@ -25,13 +25,11 @@ public class Bullet extends Entity {
 		super.move(delta);
 		
 	}
-	private static double square(double d) {
-		return d*d;
-	}
+
 	@Override
-	protected void colidedWith(Entity cEntity) {
+	protected boolean colidedWith(Entity cEntity) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 	
 

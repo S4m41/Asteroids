@@ -11,6 +11,7 @@ import game.entity.Astroid;
 import game.entity.Bullet;
 import game.entity.Entity;
 import game.entity.Ship;
+import game.world.EntityMap.QuadtreeExeption;
 import main.Drawable;
 
 public class World implements Drawable {
@@ -20,24 +21,39 @@ public class World implements Drawable {
 	//ArrayList<Entity> entityMap = new ArrayList<Entity>();
 	Ship player = new Ship(this);
 	
-	public World() {
+	@SuppressWarnings("unused")
+	public World(){
 		entityMap = new EntityMap(worldSize);
 		
-		for (int i = 0; i < 50000; i++) {
+		for (int i = 0; i < 500; i+=30) {
 			Astroid e = new Astroid(this);
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			e.setHeading(new Vector2D(x, y));
-			entityMap.add(e);
+			e.setPosition(new Vector2D(i%500, 0));
+			e.setHeading(new Vector2D(0, 1));
+			try {
+
+				entityMap.add(e);
+			} catch (EntityMap.QuadtreeExeption e2) {
+				e2.printStackTrace();
+				System.exit(-1);
+				// TODO: handle exception
+			}
 			
 		}
+		try {
 		entityMap.add(player);
+		} catch (EntityMap.QuadtreeExeption e2) {
+			e2.printStackTrace();
+			System.exit(-1);
+			// TODO: handle exception
+		}
 		Vector2D worldmiddle = EntityMap.getWorldPosition(worldSize).scalarMultiply(0.5);
 		player.setPosition(worldmiddle);
 		player.setHeading(new Vector2D(0,0));
 	}
 
-	public void update(double delta) {
+	public void update(double delta){
 		// move all
 		ArrayList<Entity> nowloop = entityMap.getContainedEntities();
 		//list of dead entities
@@ -58,8 +74,14 @@ public class World implements Drawable {
 			b.setHeading(player.getLNZHeading());
 			b.setPosition(player.getPosition());
 			b.setPosition(b.calcNewPos(delta));
-			entityMap.add(b);
-			player.fire();
+			try {
+				entityMap.add(b);
+				player.fire();	
+			}catch (QuadtreeExeption err) {
+				err.printStackTrace();
+				System.exit(-1);
+				// TODO: handle exception
+			}
 		}
 		//remove all dead entities from loop
 		for(Entity e : deadlist) {
@@ -81,15 +103,18 @@ public class World implements Drawable {
 	public void updateposition(Entity entity) {
 
 		entity.wrap(EntityMap.getWorldPosition(worldSize)); //delays wrap by one frame
+		entityMap.update(entity);
 	}
-	public Entity doescollide(Vector2D position) {
+	public ArrayList<Entity> doescollide(Vector2D position) {
+		ArrayList<Entity> possibleCollisions = entityMap.queryRange(position, Entity.MAXSIZE*2);
+		
 		// TODO Auto-generated method stub
-		return null;
+		return possibleCollisions;
 	}
 	@Override
 	public void draw(Graphics g) {
 		try {
-			for(Entity e : entityMap.getContainedEntities()) {
+			for(Entity e : entityMap.getContainedEntities()) {//XXX
 				e.draw(g);
 			}
 		}catch(java.util.ConcurrentModificationException e) {
