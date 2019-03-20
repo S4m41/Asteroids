@@ -20,6 +20,11 @@ public class EntityMap {
 		// TODO Auto-generated constructor stub
 	}
 
+	public EntityMap() {
+		this(new Vector2D(500, 500));
+		// TODO Auto-generated constructor stub
+	}
+
 	public void add(Entity e) throws QuadtreeExeption {
 		if (!storage.insert(e))
 			throw new QuadtreeExeption();
@@ -45,19 +50,20 @@ public class EntityMap {
 
 	// happens once per frame
 	public void update(Entity entity) {
-		if(entity.isAlive())
-			storage.update(entity);
 		
-
-	}
-
-	public void remove(Entity entity) {
 		storage.remove(entity);
-		containedList.remove(entity);
+		storage.insert(entity);
 
 	}
 
-	ArrayList<Entity> queryRange(Vector2D center, double distance) {
+	public boolean remove(Entity entity) {
+
+		containedList.remove(entity);
+		return storage.remove(entity);
+
+	}
+
+	public ArrayList<Entity> queryRange(Vector2D center, double distance) {
 		return storage.queryRange(new AABB(center, distance, distance));
 
 	}
@@ -71,6 +77,17 @@ public class EntityMap {
 		String ret = super.toString();
 		ret += "\n" + storage.toString();
 		return ret;
+	}
+
+	public Entity queryEntity(Entity e0) {
+		ArrayList<Entity> cand = queryRange(e0.getPosition(), 1);
+		for (Entity e1 : cand) {
+			if (e1 == e0) {
+				return e0;
+			}
+		}
+		return null;
+
 	}
 
 	/**
@@ -116,7 +133,6 @@ public class EntityMap {
 			for (int p = 0; p < points.size(); p++) {
 				if (points.get(p) == entity) {
 					points.remove(entity);
-					points.add(entity);
 					points.trimToSize();
 					return true;
 				}
@@ -128,12 +144,13 @@ public class EntityMap {
 				return false;
 
 			// Otherwise, add the points from the children
-			northWest.update(entity);
-			northEast.update(entity);
-			southWest.update(entity);
-			southEast.update(entity);
-
-			return false;
+			boolean sucsess = false;
+			
+			sucsess = sucsess || northWest.remove(entity);
+			sucsess = sucsess || northEast.remove(entity);
+			sucsess = sucsess || southWest.remove(entity);
+			sucsess = sucsess || southEast.remove(entity);
+			return sucsess;
 
 		}
 
@@ -168,15 +185,16 @@ public class EntityMap {
 
 		}
 
+		// temp XXX fix BAD
 		public String toString(Entity e) {
-			
+
 			// Prepare an array of results
 
 			// Automatically abort if the range does not intersect this quad
 			if (!boundary.containsPoint(e.getPosition()))
 				return ""; // empty list
 			if (northWest == null && points.isEmpty()) {
-				return "";//terminate if empty leaf node
+				return "";// terminate if empty leaf node
 			}
 			String ret = "" + level + ":";
 			// Check objects at this quad level
@@ -212,7 +230,7 @@ public class EntityMap {
 		@Override
 		public String toString() {
 			if (northWest == null && points.isEmpty()) {
-				return "";//terminate if empty leaf node
+				return "";// terminate if empty leaf node
 			}
 			String ret = " " + level + ":";
 			// Prepare an array of results
@@ -231,11 +249,11 @@ public class EntityMap {
 				ret += ")";
 			}
 			ret += " ";
-			
-			if(northWest == null) {
+
+			if (northWest == null) {
 				return ret;
 			}
-			
+
 			// Otherwise, add the points from the children
 			ret += "\n\t";
 			String nw, ne, se, sw;
@@ -392,7 +410,7 @@ public class EntityMap {
 	}
 
 	@SuppressWarnings("serial")
-	class QuadtreeExeption extends Exception {
+	public class QuadtreeExeption extends Exception {
 
 	}
 

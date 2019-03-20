@@ -5,7 +5,7 @@ import game.Game;
 //main enty point of program
 public class Entry {
 	public static void main(String args[]) {
-		
+		//Tests.qtDeletionTest();
 		gameLaunch();
 
 	}

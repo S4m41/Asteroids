@@ -10,9 +10,11 @@ import javax.swing.JFrame;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import game.entity.Astroid;
+import game.entity.Bullet;
 import game.entity.Entity;
 import game.entity.Ship;
 import game.world.EntityMap;
+import game.world.EntityMap.QuadtreeExeption;
 import game.world.World;
 
 public class Tests {
@@ -222,6 +224,7 @@ public class Tests {
 		e.wrap(new Vector2D(50, 50));
 		System.out.println(e.getPosition());
 	}
+
 	@SuppressWarnings("unused")
 	public static void simpleCollisionTest() {
 		World w = new World();
@@ -266,13 +269,14 @@ public class Tests {
 		System.out.println(w.toString());
 
 		ArrayList<Entity> poss = w.doescollide(e1.getPosition());
-		for(Entity e3 :poss) {
-			
+		for (Entity e3 : poss) {
+
 		}
 		System.out.println(poss.toString());
 		e1.colidedWith(e2);
 		// TODO XXX
 	}
+
 	@SuppressWarnings("unused")
 	public static void qtMovementTest() {
 		World w = new World();
@@ -304,17 +308,17 @@ public class Tests {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		//int wierd = 0; // 6250018/50000000
-		for (int i = 0; i < 5000*5; i++) {
+		// int wierd = 0; // 6250018/50000000
+		for (int i = 0; i < 5000 * 5; i++) {
 			e1.move(1);
 			Vector2D pos = e1.getPosition();
 			int x = (int) pos.getX();
 			int y = (int) pos.getY();
-			
+
 			ArrayList<Entity> cand = w.getPos(e1);
-			
+
 			for (Entity e : cand) {
-				if (e == e1&& e instanceof Ship) {
+				if (e == e1 && e instanceof Ship) {
 					Vector2D pos1 = e.getPosition();
 					int x1 = (int) pos1.getX();
 					int y1 = (int) pos1.getY();
@@ -342,7 +346,7 @@ public class Tests {
 		outw.close();
 		outn.close();
 		// System.out.println("\n"+listw);
-		//System.out.println(wierd);
+		// System.out.println(wierd);
 
 	}
 
@@ -377,5 +381,58 @@ public class Tests {
 
 	private static double square(double d) {
 		return d * d;
+	}
+
+	@SuppressWarnings("unused")
+	public static void qtDeletionTest() {
+		EntityMap em = new EntityMap();
+		World w = new World();
+
+		Ship sheep = new Ship(w);
+		Bullet bang = new Bullet(w);
+		Astroid rocks = new Astroid(w);
+
+		populate_entitymap(em, w);
+		try {
+			em.add(sheep);
+			em.add(rocks);
+			em.add(bang);
+
+		} catch (QuadtreeExeption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		populate_entitymap(em, w);
+
+		//System.out.println(sheep + em.printStringTrace(sheep));
+		System.out.println(em.remove(sheep));
+		System.out.println(sheep +""+ em.queryEntity(sheep));
+		System.out.println(em.remove(rocks));
+		System.out.println(rocks +""+ em.queryEntity(rocks));
+		System.out.println(em.remove(bang));
+		System.out.println(bang +""+ em.queryEntity(bang));
+		System.out.println("done");
+
+	}
+
+	@SuppressWarnings("unused")
+	static void populate_entitymap(EntityMap em, World w) {
+		for (int i = 0; i < (int) 5e4; i++) {
+			Entity e;
+			if (i % 3 == 2 && 1 < 0.5) {
+				e = new Bullet(w);
+			} else if (i % 3 == 1 && 1 < 0.2) {
+				e = new Ship(w);
+			} else {
+				e = new Astroid(w);
+			}
+			e.setPosition(new Vector2D(i % 500, (i / 2) % 500));
+			try {
+				em.add(e);
+			} catch (QuadtreeExeption e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 }
