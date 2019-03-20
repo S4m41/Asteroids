@@ -1,17 +1,14 @@
 package game.entity;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;//create wrapper
 
 import game.world.World;
 import main.Drawable;
-import main.entry;
 
 public abstract class Entity implements Drawable {
 	public static final int MAXSIZE = 50;
@@ -21,8 +18,8 @@ public abstract class Entity implements Drawable {
 	//// type //enum? int?
 	protected boolean alive = true;
 	protected Color mycol = Color.blue;// temp replace w sprite
-
-	private final int ID = hashCode(); //temp java implicit. check later assuming unique
+	private static int _IDCOUNT = 0;
+	private final int ID = setID(); //temp java implicit. check later assuming unique
 	protected int size = 10;
 
 	protected Vector2D oldposition = getPosition();
@@ -50,6 +47,7 @@ public abstract class Entity implements Drawable {
 		
 		
 		ArrayList<Entity> cEntityList = myworld.doescollide(position);// do i collide with anything at this position.needs size
+		cEntityList.remove(this);
 		//ArrayList<Entity> notIt = new ArrayList<Entity>();
 		for(Entity collisionPartner: cEntityList){
 			if(!(square(this.size+collisionPartner.size)< square(position.distance(collisionPartner.position)))) {//XXX test expression
@@ -71,7 +69,7 @@ public abstract class Entity implements Drawable {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(mycol);
-		g.fillRect((int) position.getX(), (int) position.getY(), size, size);
+		g.fillRect((int) position.getX()-size/2, (int) position.getY()-size/2, size, size);
 	}
 
 	public void wrap(Vector2D worldPosition) {
@@ -86,7 +84,7 @@ public abstract class Entity implements Drawable {
 	/*
 	 * https://codereview.stackexchange.com/questions/58063/screen-wraparound
 	 */
-	private static double wrapAround(double coordinate, double max) {
+	public static double wrapAround(double coordinate, double max) {
 		coordinate %= max;
 		return (coordinate < 0) ? coordinate + max : coordinate;
 	}
@@ -117,10 +115,6 @@ public abstract class Entity implements Drawable {
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
-	}
-
-	public int getID() {
-		return ID;
 	}
 
 	public Vector2D getPosition() {
@@ -158,6 +152,12 @@ public abstract class Entity implements Drawable {
 		else
 			return false;
 		return true;
+	}
+	public int getID() {
+		return ID;
+	}
+	private static int setID() {
+		return _IDCOUNT++;
 	}
 	@Override
 	public String toString() {
