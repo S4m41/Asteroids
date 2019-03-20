@@ -1,5 +1,7 @@
 package game.entity;
 
+import java.awt.Color;
+
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import game.world.World;
@@ -10,6 +12,7 @@ public class Bullet extends Entity {
 	double distanceTraveled = 0;
 	public Bullet(World home) {
 		super(home);
+		mycol = Color.WHITE;
 		this.speed *=2;
 		// TODO Auto-generated constructor stub
 	}

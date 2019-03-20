@@ -76,6 +76,7 @@ public class Game {
 		initWindow();
 		frame.addKeyListener(new main.KeyListener(this));
 		this.setCurrentWorld(new World());
+		getCurrentWorld().init();
 
 		setState(GameState.running);
 	}

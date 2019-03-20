@@ -25,32 +25,23 @@ public class World implements Drawable {
 	public World(){
 		entityMap = new EntityMap(worldSize);
 		
-		for (int i = 0; i < 500; i+=30) {
-			Astroid e = new Astroid(this);
-			double x = ThreadLocalRandom.current().nextDouble(0, 1);
-			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			e.setPosition(new Vector2D(i%500, 0));
-			e.setHeading(new Vector2D(0, 1));
-			try {
-
-				entityMap.add(e);
-			} catch (EntityMap.QuadtreeExeption e2) {
-				e2.printStackTrace();
-				System.exit(-1);
-				// TODO: handle exception
-			}
-			
-		}
-		try {
-		entityMap.add(player);
-		} catch (EntityMap.QuadtreeExeption e2) {
-			e2.printStackTrace();
-			System.exit(-1);
-			// TODO: handle exception
-		}
+	}
+	public void init() {
+		add(player);
 		Vector2D worldmiddle = EntityMap.getWorldPosition(worldSize).scalarMultiply(0.5);
 		player.setPosition(worldmiddle);
 		player.setHeading(new Vector2D(0,0));
+		
+		for (int i = 0; i < 500; i+=30) {
+			
+			Astroid e = new Astroid(this);
+			double x = ThreadLocalRandom.current().nextDouble(0, 1);
+			double y = ThreadLocalRandom.current().nextDouble(0, 1);
+			e.setPosition(new Vector2D(i%500, 150));
+			e.setHeading(new Vector2D(0, 1));
+			e.setSpeed(0);
+			add(e);
+		}
 	}
 
 	public void update(double delta){
@@ -74,14 +65,10 @@ public class World implements Drawable {
 			b.setHeading(player.getLNZHeading());
 			b.setPosition(player.getPosition());
 			b.setPosition(b.calcNewPos(delta));
-			try {
-				entityMap.add(b);
+			
+				add(b);
 				player.fire();	
-			}catch (QuadtreeExeption err) {
-				err.printStackTrace();
-				System.exit(-1);
-				// TODO: handle exception
-			}
+			
 		}
 		//remove all dead entities from loop
 		for(Entity e : deadlist) {
@@ -107,8 +94,6 @@ public class World implements Drawable {
 	}
 	public ArrayList<Entity> doescollide(Vector2D position) {
 		ArrayList<Entity> possibleCollisions = entityMap.queryRange(position, Entity.MAXSIZE*2);
-		
-		// TODO Auto-generated method stub
 		return possibleCollisions;
 	}
 	@Override
@@ -160,4 +145,29 @@ public class World implements Drawable {
 		
 	}
 
+	public void add(Entity e1) {
+		try {
+			entityMap.add(e1);
+		} catch (QuadtreeExeption e) {
+			e.printStackTrace();
+			System.exit(-1);//brick
+		}
+		
+	}
+	public String stringTrace(Entity e1) {
+		// TODO Auto-generated method stub
+		return entityMap.printStringTrace(e1);
+	}
+	
+	@Override
+	public String toString() {
+		String ret = super.toString();
+		if(player.isAlive())
+			ret += "\n Player:alive";
+		else
+			ret += "\n Player:ded";
+		ret += "\n" + entityMap.toString();
+		return ret;
+	}
+	
 }
