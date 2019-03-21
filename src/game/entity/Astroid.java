@@ -35,6 +35,7 @@ public class Astroid extends Entity {
 		children[1].setSpeed(speed*2);
 		
 		children[0].setHeading(heading.scalarMultiply(-1));
+		children[1].setHeading(heading.scalarMultiply(1));
 		//TODO heading
 		
 	}
@@ -46,6 +47,7 @@ public class Astroid extends Entity {
 				split= true;
 			}
 			System.out.println("bonk");
+			System.out.println(cEntity + ""+ this);
 			alive=false;
 			cEntity.alive=false;
 			return true;

@@ -33,14 +33,14 @@ public class World implements Drawable {
 		player.setPosition(worldmiddle);
 		player.setHeading(new Vector2D(0,0));
 		
-		for (int i = 0; i < 1; i+=1) {
+		for (int i = 0; i < 10; i+=1) {
 			
 			Astroid e = new Astroid(this);
 			double x = ThreadLocalRandom.current().nextDouble(0, 1);
 			double y = ThreadLocalRandom.current().nextDouble(0, 1);
-			e.setPosition(new Vector2D((i+50)%500,100));
+			e.setPosition(new Vector2D((i+50)%500,100+ i%100));
 			e.setHeading(new Vector2D(0, 1));
-			e.setSpeed(0);
+			e.setSpeed(1);
 			e.setSize(20);//ThreadLocalRandom.current().nextInt(9, 50));
 			add(e);
 		}
@@ -59,20 +59,21 @@ public class World implements Drawable {
 			if (e.isAlive()) {
 				
 				e.move(delta);
-				entityMap.update(e);
+				//entityMap.update(e);
 				
 				if(e instanceof Astroid) {//move logic somewhere lese temp
 					Astroid a = (Astroid)e;
 					if(a.hasSplit()) {
 						Astroid[] children = new Astroid[2];
 						a.getChildren(children, 2);
-						bornList.add(children[0]);
+						bornList.add(children[0]); 
 						bornList.add(children[1]);
 					}
 				}
 					
 				
 			}else {
+				System.out.println(e);
 				deadlist.add(e);
 			}
 		}
@@ -82,8 +83,8 @@ public class World implements Drawable {
 			b.setPosition(player.getPosition());
 			b.setPosition(b.calcNewPos(delta));
 			
-				add(b);
-				player.fire();	
+			add(b);
+			player.fire();	
 			
 		}
 		for(Entity a: bornList) {

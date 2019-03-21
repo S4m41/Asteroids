@@ -26,7 +26,7 @@ public class Tests {
 		System.out.println(entityMap.getContainedEntities().isEmpty());
 
 	}
-
+ 
 	@SuppressWarnings("unused")
 	public static void jframetest() {
 		JFrame test = new JFrame();
@@ -309,7 +309,7 @@ public class Tests {
 			System.exit(-1);
 		}
 		// int wierd = 0; // 6250018/50000000
-		for (int i = 0; i < 5000 * 5; i++) {
+		for (int i = 0; i < 1 * 5; i++) {
 			e1.move(1);
 			Vector2D pos = e1.getPosition();
 			int x = (int) pos.getX();
@@ -322,8 +322,8 @@ public class Tests {
 					Vector2D pos1 = e.getPosition();
 					int x1 = (int) pos1.getX();
 					int y1 = (int) pos1.getY();
-
-					listn += x1 + "," + y1 + "\n";
+					System.out.println(e1 + " §!:" + e);
+					//listn += x1 + "," + y1 + "\n";
 				}
 			}
 
@@ -348,6 +348,35 @@ public class Tests {
 		// System.out.println("\n"+listw);
 		// System.out.println(wierd);
 
+	}
+	public static void qtAdd() {
+		EntityMap em = new EntityMap();
+		World w = new World();
+
+		Ship sheep = new Ship(w);
+		Bullet bang = new Bullet(w);
+		Astroid rocks = new Astroid(w);
+
+		Tests.populate_entitymap(em, w);
+		try {
+			em.add(sheep);
+
+		} catch (QuadtreeExeption e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ArrayList<Entity> cand = w.getPos(sheep);
+
+		for (Entity e : cand) {
+			if (e == sheep && e instanceof Ship) {
+				Vector2D pos1 = e.getPosition();
+				int x1 = (int) pos1.getX();
+				int y1 = (int) pos1.getY();
+				System.out.println(sheep + " §!:" + e);
+				//listn += x1 + "," + y1 + "\n";
+			}
+		}
+		System.out.println("done");
 	}
 
 	public static void stringTraceTest() {
@@ -401,7 +430,7 @@ public class Tests {
 		} catch (QuadtreeExeption e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		populate_entitymap(em, w);
 
 		//System.out.println(sheep + em.printStringTrace(sheep));
@@ -417,7 +446,7 @@ public class Tests {
 
 	@SuppressWarnings("unused")
 	static void populate_entitymap(EntityMap em, World w) {
-		for (int i = 0; i < (int) 5e4; i++) {
+		for (int i = 0; i < (int) 10; i++) {
 			Entity e;
 			if (i % 3 == 2 && 1 < 0.5) {
 				e = new Bullet(w);

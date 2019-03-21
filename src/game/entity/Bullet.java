@@ -16,6 +16,7 @@ public class Bullet extends Entity {
 		this.speed *=2;
 		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	public void move(double delta) {
 		Vector2D  distance = heading.scalarMultiply(speed*delta);
@@ -23,6 +24,7 @@ public class Bullet extends Entity {
 		//System.out.println(distanceTraveled);
 		if(distanceTraveled>decaydistance) {
 			this.alive = false;
+			System.out.println("movendie"); 
 		}
 		super.move(delta);
 		

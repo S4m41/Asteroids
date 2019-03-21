@@ -58,7 +58,7 @@ public class EntityMap {
 
 	public boolean remove(Entity entity) {
 
-		containedList.remove(entity);
+		containedList.remove(entity); 
 		return storage.remove(entity);
 
 	}
@@ -134,6 +134,7 @@ public class EntityMap {
 				if (points.get(p) == entity) {
 					points.remove(entity);
 					points.trimToSize();
+					//System.out.println("rem"+entity);
 					return true;
 				}
 

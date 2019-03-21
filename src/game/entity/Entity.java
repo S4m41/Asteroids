@@ -95,7 +95,7 @@ public abstract class Entity implements Drawable {
 
 	@Override
 	public boolean isVisible() {
-		return isAlive();
+		return true;//isAlive();
 	}
 
 	public Vector2D getHeading() {

@@ -27,7 +27,7 @@ public class Game {
 
 	// main loop of the program
 	public void run() {
-		if (getState() != GameState.running)
+		if (getState() != GameState.running) 
 			throw new IllegalStateException();
 		long last = System.nanoTime();
 	
@@ -45,7 +45,7 @@ public class Game {
 			// update the system
 			update(delta);
 			// repaint all
-			screenPane.repaint();
+			//screenPane.repaint();
 	
 			lastTick += timeTaken;
 			fps++;
